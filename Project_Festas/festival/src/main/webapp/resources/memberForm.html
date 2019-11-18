@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+h2{
+color: black;
+text-shadow: black;
+}
+
+input {
+   border-radius: 15%;
+}
+form {
+	size: 300px;
+}
+</style>
+</head>
+<body>
+	<h2>Festa 회원가입</h2>
+		<div id="contentForm" text-align:center">
+			<form method="get" action="/festival/member">
+				<input type="hidden" name="action" value="insert">	
+				<input id="mid" type="text" name="mid" placeholder="ID를 입력하세요."> 
+				<br>
+				<input id="pw" type="password" name="pw"  placeholder="PW를 입력하세요."><br>
+				<input id="email" type="text" name="email" placeholder="Email를 입력하세요."><br>
+				<input id=phone name=phone type=tel 
+					        placeholder="00*-000*-0000" 
+					        pattern="[0-9]{2,3}-[0-9]{3,4}-[0-9]{4}">
+				<br> 
+				<input type="submit" value="보내기">
+				<input type="reset" value="다시 작성하기">
+			</form>	
+		</div>
+	
+  <script type="text/javascript">
+    $(document).ready(function(){
+        $('#checkbtn').on('click', function(){
+            $.ajax({
+                type: 'POST',
+                url: '/mate/checkSignup',
+                data: {
+                    "id" : $('#id').val()
+                },
+                success: function(data){
+                    if($.trim(data) == 0){
+                        $('#checkMsg').html('<p style="color:blue">사용가능</p>');
+                    }
+                    else{
+                        $('#checkMsg').html('<p style="color:red">사용불가능</p>');
+                    }
+                }
+            });    //end ajax    
+        });    //end on    
+    });
+    </script>
+</body>
+</html>

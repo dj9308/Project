@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+h2{
+color: navy;
+text-shadow: black;
+}
+
+input {
+   border-radius: 15%;
+}
+</style>
+</head>
+<body>
+
+<h2>Festas! 환영합니다 :)</h2><hr>
+<form method="get" action="/festival/main">
+<section>
+	<select name="city">
+		<option value="서울특별시">서울특별시</option>
+		<option value="경기도">경기도</option>
+	</select>
+	<select name="district">
+		<option value="광진구">광진구</option><option value="중구">중구</option>
+		<option value="구로구">구로구</option><option value="중랑구">중랑구</option>
+		<option value="노원구">노원구</option>
+		<option value="동대문구">동대문구</option>
+		<option value="동작구">동작구</option>
+		<option value="마포구">마포구</option>
+		<option value="양천구">양천구</option>
+		<option value="은평구">은평구</option>
+		<option value="영등포구">영등포구</option>
+		<option value="용산구">용산구</option>
+		<option value="은평구">은평구</option>
+		<option value="종로구">종로구</option>	
+	</select>
+	<select name="month">
+		<option value="1">1월</option><option value="2">2월</option>
+		<option value="3">3월</option><option value="4">4월</option>
+		<option value="5">5월</option><option value="6">6월</option>
+		<option value="7">7월</option><option value="8">8월</option>
+		<option value="9">9월</option><option value="10">10월</option>
+		<option value="11">11월</option><option value="12">12월</option>
+	</select>
+	<select name="type">
+		<option value="문화예술">문화예술</option>
+		<option value="주민화합">주민화합</option>
+	</select>
+	<input type="submit" value="검색하기">
+</section>	
+</form>
+
+<footer>
+<i>Except where otherwise noted, 
+content on this site is licensed under a Creative Commons Attribution 4.0
+International license. Icons by The Noun Project. Website by Affinity Bridge.
+</i></footer>
+</body>
+</html>

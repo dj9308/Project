@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="resource.MyPageMapper">
+
+	<!-- 정보 수정 -->
+ 	<select id="info" parameterType="String" resultType="vo.MyPageVO">
+ 		SELECT MID, PW, EMAIL, PHONE FROM MEMBERINFO WHERE MID = #{mid}
+ 	</select>
+ 		<update id="update"  parameterType="vo.MyPageVO"  >
+		UPDATE MEMBERINFO SET PW = #{pw} WHERE MID = #{mid}
+	</update>
+	 		<update id="updatepm"  parameterType="vo.MyPageVO"  >
+		UPDATE MEMBERINFO SET EMAIL = #{email}, PHONE = #{phone} WHERE MID = #{mid}
+	</update>
+	<!-- 비밀번호확인 -->
+ 	<select id="pw" parameterType="String" resultType="vo.MyPageVO">
+ 		SELECT PW FROM MEMBERINFO WHERE MID = #{mid}
+ 	</select>
+ 	
+	<!-- 찜 목록 -->
+	<select id="basket" parameterType="vo.MyPageBasketVO" resultType="vo.MyPageBasketVO">
+ 		SELECT f.place, TO_CHAR(opendate, 'yyyy-mm-dd') opendate, f.name, d.fid
+ 		FROM FESTIVAL f, myfesta r, festadate d 
+ 		where f.fid = r.fid and r.fid=d.fid
+ 		and r.mid = #{mid}
+ 	</select>
+ 	
+ 	<!-- 찜목록 삭제 -->
+ 	    <delete id="delete"  parameterType="vo.MyPageBasketVO"  >
+    	delete from myfesta where mid = #{mid} and fid= #{fid}
+	</delete>
+	
+	
+<!-- 리뷰 확인 -->
+<select id="reviewInfo" parameterType="vo.MyPageReviewVO" resultType="vo.MyPageReviewVO">
+ 		SELECT review_id, name, rcontent, TO_CHAR(writedate, 'yyyy-mm-dd') writedate, grade, f.fid FROM FESTIVAL f, REVIEW r where r.mid = #{mid} and f.fid = r.fid
+ 	</select>
+ 	
+ 		<!-- 리뷰목록 삭제 -->
+	 	    <delete id="deleteRev"  parameterType="vo.MyPageBasketVO"  >
+    	delete from review where review_id= #{review_id} 
+	</delete>
+</mapper>

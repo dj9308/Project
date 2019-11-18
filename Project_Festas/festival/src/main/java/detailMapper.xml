@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="resource.detailMapper">
+
+	<!-- 축제정보 -->
+ 	<select id="selectAll" parameterType="_int"  resultType="vo.detailVO">
+    	select f.fid,f.name,f.place,f.lat,f.lng,f.type,f.fcontent,f.hostinfo,TO_CHAR(opendate, 'yyyy-mm-dd') opendate,TO_CHAR(closedate, 'yyyy-mm-dd') closedate from festival f, festadate r where f.fid=#{fid} and f.fid = r.fid
+ 	</select>
+ 	<!-- 이미지 갯수대로 출력 -->
+ 		<select id="imgList" parameterType="_int" resultType="vo.detailVO">
+    	select * from festaimg where fid=#{fid}
+ 	</select>
+ 	
+ 	<!-- 댓글 리스트 출력 -->
+ 	 	<select id="reviewList" parameterType="_int"  resultType="vo.detailReviewVO">
+    	select fid, rcontent, mid, TO_CHAR(writedate, 'yyyy-mm-dd') writedate, review_id, grade from review where fid=#{fid}
+ 	</select>
+ 	
+ 	<!-- 찜목록 중복 확인 -->
+ 	<select id="basketCheck" parameterType="vo.detailReviewVO" resultType="vo.detailReviewVO">
+    	select * from myfesta where mid=#{mid} and fid=#{fid}
+ 	</select>
+ 	
+ 	<!-- 찜목록 저장 -->
+ 	<insert id="insertBasket"  parameterType="vo.detailReviewVO">
+  		insert into myfesta values(#{mid}, #{fid})			  
+	</insert>
+ 	<!-- 댓글 입력 -->
+ 	 	 <insert id="insertReview"  parameterType="vo.detailReviewVO">
+  		insert into review values(#{mid}, #{rcontent}, #{fid}, sysdate, #{grade}, review_seq.nextval)			  
+	</insert>
+	<!-- 신고 -->
+		 	 <insert id="report"  parameterType="vo.detailReviewVO">
+  		insert into report values(report_seq.nextval, #{reason}, #{mid}, #{review_id})		  
+	</insert>
+</mapper>

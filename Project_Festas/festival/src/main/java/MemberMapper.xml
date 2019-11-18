@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="resource.MemberMapper">
+ 	<!-- listAll  -->
+ 	<select id="selectMember"  resultType="vo.MemberinfoVO">
+    	select mid,pw,email,phone from memberInfo
+ 	</select>
+ 	
+ 	<!-- insert -->
+ 	 <insert id="insertMember"  parameterType="vo.MemberinfoVO">
+  		insert into memberInfo (mid, pw, email, phone) 
+    						  values(#{mid},#{pw}, #{email}, #{phone})				  
+	</insert>
+	
+	<!--  checkId -->
+	<select id="checkId" parameterType="string" resultType="vo.MemberinfoVO">
+		select mid from memberInfo where mid = #{mid}
+	</select> 
+	
+	<!--  check Login -->
+	<select id="login" parameterType="string" resultType="vo.MemberinfoVO">
+		select * from memberInfo where mid=#{mid} and pw=#{pw}
+	</select>
+	
+	
+	<!-- festivalSelect  -->
+ 	<select id="festivalSelect" parameterType="string" resultType="vo.FestivalVO">
+    	select * from festival where fid=#{fid}
+ 	</select>
+ 	
+	
+	
+	<!--  아이디 확인   
+	<select id=idCheck resultType="vo.MemberinfoVO">
+		select mid From memberInfo
+			where mid = #{mid}
+	</select> -->
+</mapper>

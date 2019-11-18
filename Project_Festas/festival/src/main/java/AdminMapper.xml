@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="resource.AdminMapper">
+ 	<select id="selectReport" resultType="vo.ReportVO">
+ 		select  re.reason, re.report_id, re.mid report_mid, r.rcontent, r.review_id, 
+    			to_char(r.writedate, 'yyyy/mm/dd') writedate, r.mid review_mid, f.name
+		from report re, review r, festival f
+		where re.review_id = r.review_id and r.fid = f.fid
+ 	</select>
+ 	<delete id="deleteReview" parameterType="_int">
+    	delete from review where review_id = #{review_id}
+    </delete>
+    <delete id="deleteReport" parameterType="_int">
+    	delete from report where report_id = #{report_id}
+    </delete>
+</mapper>
