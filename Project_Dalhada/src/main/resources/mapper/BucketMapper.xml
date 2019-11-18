@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="resource.BucketMapper">
+ 	<select id="detailBucket"  resultType="vo.BucketDetailVO" parameterType="vo.StringIntVO">
+		select sb.bucket_id, sb.id as selectedbucket_id, sb.title, sb.content, sb.address, sb.lat, sb.lng, bi.image_path as bucketImage_path
+				, mi.id as by_member_id, mi.image_path as profileImage_path, sb.member_id as get_member_id,
+				(select count(*)
+    				from likeinfo
+    				where selectedbucket_id = #{id}) as like_cnt, 
+        		(select count(*) from likeinfo Li where Li.member_id = #{name} and sb.id = Li.selectedbucket_id) islike 
+    	from bucketinfo bi, selectedBucket sb, memberinfo mi
+    	where bi.id = sb.bucket_id AND sb.id =#{id} AND mi.id = bi.member_id
+ 	</select>
+ 	<select id="selectTOPBucket" resultType="vo.BucketVO" parameterType="String">
+		select *
+		from (select t.* ,  row_number() over(order by likecnt desc) rnum
+            	from (select sb.bucket_id , sb.id as selectedbucket_id, bi.image_path, sb.title, bi.isAD, 
+                    	    (select count(*) from likeinfo Li where sb.id = Li.selectedbucket_id) likecnt, 
+                        	(select count(*) from likeinfo Li where Li.member_id = #{member_id} and sb.id = Li.selectedbucket_id) islike
+                    	from bucketinfo bi, selectedbucket sb
+                    	where bi.id = sb.bucket_id <if test="value!=null"> and sb.member_id != #{value} </if>) t)
+		where rnum between 0 and 30
+	</select>
+	<select id="selectTagBucket" resultType="vo.BucketVO" parameterType="vo.StringIntVO">
+		select t.*
+        from (select sb.bucket_id , sb.id as selectedbucket_id, bi.image_path, sb.title,  
+                        (select count(*) from likeinfo Li where sb.id = Li.selectedbucket_id) likecnt
+                  <if test="name!=null">, (select count(*) from likeinfo Li where Li.member_id = #{name} and sb.id = Li.selectedbucket_id) islike </if>
+              from bucketinfo bi, selectedbucket sb
+              where bi.id = sb.bucket_id <if test="name!=null"> and sb.member_id != #{name} </if>and 
+                    sb.id in (select distinct bucket_id
+                              from selectedtag
+                              where tag_id = #{id})) t
+		where rownum between 0 and 30
+	</select>
+	<select id="selectSimilarBucket" resultType="vo.BucketVO" parameterType="String">
+		select t.*
+        from(select sb.bucket_id , sb.id as selectedbucket_id, bi.image_path, sb.title, bi.isAD,
+                        (select count(*) from likeinfo Li where sb.id = Li.selectedbucket_id) likecnt, 
+                        (select count(*) from likeinfo Li where Li.member_id = #{member_id} and sb.id = Li.selectedbucket_id) islike
+                from bucketinfo bi, selectedbucket sb
+                where bi.id = sb.bucket_id and bi.member_id = sb.member_id and
+                            bi.member_id in(select st.member_id
+                                            from (select bi.member_id
+                                                  from selectedbucket sb, bucketinfo bi
+                                                  where sb.member_id = #{member_id} and bi.member_id != #{member_id} and sb.bucket_id = bi.id 
+                                                  group by bi.member_id) st
+                                            where rownum between 1 and 4)) t
+		where rownum between 0 and 30
+	</select>
+	<select id="popularTags" resultType="vo.TagInfoVO" parameterType="vo.StringIntVO">
+		select t.tag_id, ti.name
+		from (select count(*), tag_id, row_number() over(order by count(*) desc) rnum
+		      from selectedtag st, selectedbucket sb
+		      where st.bucket_id = sb.id <if test="name!=null"> and sb.member_id = #{name} </if>
+		      group by tag_id) t, taginfo ti
+		where t.tag_id = ti.id and rnum between 1 and #{id}
+	</select>
+	<insert id="insertBucket" parameterType="vo.InsertedBucketVO">
+	{call
+        declare
+        begin
+            insert into bucketinfo values (bucket_seq.nextval, concat(bucket_seq.currval, #{image_path}), #{member_id}, '');
+          	insert into selectedbucket 
+			values(selectedbucket_seq.nextval, bucket_seq.currval, #{member_id},
+				<choose> 
+					<when test="group_id == 0"> null</when>
+					<otherwise>#{group_id}</otherwise>
+				</choose>
+				, #{title}, #{content}, to_date(#{d_day}, 'yyyy.mm.dd'), 'f', #{address}, #{lat}, #{lng});
+			<foreach item="item" collection="tag_id" open="INSERT ALL"  close="SELECT * FROM DUAL">
+				into selectedtag 
+				values(#{item}, selectedbucket_seq.currval)
+			</foreach>;
+        end
+    }
+    </insert>
+    <insert id="insertGetBucket" parameterType="vo.InsertedBucketVO">
+	{call
+        declare
+        begin
+          	insert into selectedbucket 
+			values(selectedbucket_seq.nextval, #{bucket_id}, #{member_id},
+				<choose> 
+					<when test="group_id == 0"> null</when>
+					<otherwise>#{group_id}</otherwise>
+				</choose>
+				, #{title}, #{content}, to_date(#{d_day}, 'yyyy.mm.dd'), 'f', #{address}, #{lat}, #{lng});
+			<foreach item="item" collection="tag_id" open="INSERT ALL"  close="SELECT * FROM DUAL" >
+				into selectedtag 
+				values(#{item}, selectedbucket_seq.currval)
+			</foreach>;
+        end
+    }
+    </insert>
+    <select id="selectImagePath" resultType="String" parameterType="String">
+    	select image_path
+		from(select image_path, row_number()  over(order by id desc) as rnum 
+		    from bucketinfo 
+		    where member_id = #{member_id}) 
+		where rnum = 1
+    </select>
+ 	<select id="selectedTags" resultType="String" parameterType="_int">
+ 		select t.name
+ 		from taginfo t, selectedtag St
+ 		where St.bucket_id = #{selectedbucket_id} AND t.id = St.tag_id
+ 	</select>
+ 	<select id="bucketTagInfo" resultType="_int" parameterType="_int">
+ 		select St.tag_id
+ 		from selectedtag St
+ 		where St.bucket_id = #{selectedbucket_id}
+ 	</select>
+	<insert id="insertLike" parameterType="vo.LikeInfoVO">
+		insert into likeinfo (selectedbucket_id, member_id) 
+		values (#{selectedbucket_id}, #{member_id})
+	</insert>
+	<delete id="deleteLike" parameterType="vo.LikeInfoVO">
+		delete 
+		from likeinfo
+		where selectedbucket_id = #{selectedbucket_id} AND member_id = #{member_id}
+	</delete>
+	<select id="countLike" parameterType="_int" resultType="_int">
+		select count(*)
+		from likeinfo
+		where selectedbucket_id = #{selectedbucket_id}
+	</select>
+	<select id="editBucketInfo"  resultType="vo.EditBucketInfoVO" parameterType="vo.StringIntVO">
+		select sb.id as seletedbucket_id, sb.title, sb.content, sb.lat, sb.lng, bi.image_path,
+				sb.group_id, to_char(sb.d_day, 'yyyy.mm.dd') as d_day, bi.member_id, sb.address
+    	from bucketinfo bi, selectedBucket sb 
+    	where bi.id = sb.bucket_id AND sb.id =#{id}
+ 	</select>
+	<update id="updateBucket" parameterType="vo.UpdatedBucketVO">
+		update selectedbucket
+		set title = #{title},
+            content = #{content},
+            group_id = #{group_id},
+            d_day = to_date(#{d_day}, 'yyyy.mm.dd'),
+            address = #{address},
+            lat = #{lat},
+            lng = #{lng} 
+        where id = #{selectedbucket_id} and member_id = #{member_id}
+	</update>
+	<insert id="updateTags" parameterType="vo.InsertedBucketVO">
+	{call
+        declare
+        begin
+        	delete from selectedtag 
+			where bucket_id = #{selectedbucket_id};
+			<foreach item="item" collection="taglist" open="INSERT ALL"  close="SELECT * FROM DUAL" >
+				into selectedtag 
+				values(#{item}, #{selectedbucket_id})
+			</foreach>;
+        end
+    }
+    </insert>
+</mapper>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="resource.AchieveMapper">
+	<!-- 완료,상세버킷 select -->
+ 	<select id="selectCompleteBucket" parameterType="String"  resultType="vo.AchieveVO">
+ 		select bi.image_path bucketImage_path, sb.id selectedbucket_id, title, sb.content sb_content, address, lat, lng, 
+		to_char(complete_date,'yyyy.MM.dd') complete_date, di.content di_content, 
+    		(select count(*)
+    		from likeinfo
+    		where selectedbucket_id = sb.id) like_cnt, 
+    		trunc((to_char(di.complete_date, 'yyyy') - 
+    		(select to_char(birth, 'yyyy') birth from memberinfo where id=#{member_id})+1)/10) age
+		from bucketinfo bi, selectedbucket sb, diary di
+		where bi.id = sb.bucket_id and sb.id = di.bucket_id 
+		and sb.member_id = #{member_id} order by to_char(di.complete_date,'YYYY-MM-DD HH24:MI:SS')
+ 	</select>
+ 	
+ 	<!-- 상세버킷 선택된 태그 select -->
+ 	<select id="selectedTag" parameterType="int"  resultType="String">
+ 		select tag_id
+		from selectedtag
+		where bucket_id = #{selectedbucket_id} order by tag_id
+ 	</select>
+</mapper>

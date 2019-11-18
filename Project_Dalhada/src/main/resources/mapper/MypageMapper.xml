@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="resource.MypageMapper">
+<!-- 사용자 정보 관련 -->
+<!-- 사용자 정보 추출-->
+<select id="memberInfo" parameterType="vo.MemberinfoVO" resultType="vo.MemberinfoVO">
+ 		SELECT id, password, image_path, email, my_words, TO_CHAR(birth, 'YYYY-MM-DD') birth FROM memberinfo where id = #{id}
+ 	</select>
+
+<!-- 비밀번호 추출 -->
+<select id="Checkpw" parameterType="String" resultType="String">
+ 		SELECT password FROM memberinfo where id = #{id}
+ 	</select>
+ 	
+ 		<!-- 비밀번호 수정 -->
+	<update id="UpCheck"  parameterType="String">
+		UPDATE memberinfo SET password = #{password} where id = #{id}
+	</update>
+	
+		<!-- 나머지 정보 수정-->
+	<update id="UpInfo"  parameterType="String">
+		UPDATE memberinfo SET email=#{email},birth=TO_DATE(#{birth}, 'YYYY-MM-DD'),
+		image_path=#{image_path},my_words=#{my_words} where id = #{id}
+	</update>
+	
+ 	<!-- 그룹 -->
+ 	<!-- 그룹 드롭박스 -->
+ 	<select id="group" parameterType="String" resultType="vo.GroupVO">
+ 		SELECT * FROM groupinfo where member_id = #{id}
+ 	</select>
+ 	
+ 	<!-- 그룹 이름 변경 -->
+ 	<update id="updateGroup"  parameterType="map">
+		UPDATE GROUPINFO SET name = #{name} WHERE ID = #{id} and member_id=#{member_id}
+	</update>
+	
+	<!-- 그룹안의 버킷들을 디폴트로 이동 -->
+	<update id="DefaultGroup"  parameterType="_int">
+		UPDATE SELECTEDBUCKET SET group_id = null where group_id = #{id}
+	</update>
+	
+	<!-- 그룹 생성 -->
+	 	 <insert id="CreateGroup"  parameterType="map">
+ 	 INSERT INTO GROUPINFO VALUES (GROUP_SEQ.nextval,#{CreGroup},#{member_id})		  
+	</insert>
+	
+	<!-- 그룹 삭제 -->
+	<delete id="DeleteGroup"  parameterType="_int"  >
+    	delete from groupinfo where id = #{id}
+	</delete>
+	
+ 	<!-- 리스트 출력 -->
+ 	<!-- 버킷리스트 전부 -->
+ 	<select id="bucketAll" parameterType="String" resultType="vo.MypageBucketVO">
+ 		SELECT title, TRUNC(sysdate-d_day) d_day, id FROM selectedbucket where member_id = #{id} order by d_day DESC
+ 	</select>
+ 	
+ 	<!-- 전체 그룹의 도전 / 완료 버킷 -->
+ 	<select id="choose" parameterType="map" resultType="vo.MypageBucketVO">
+ 		SELECT title, TRUNC(sysdate-d_day) d_day, id FROM selectedbucket where member_id = #{id} and stat = #{stat} order by d_day DESC
+ 	</select>
+ 	
+ 	<!-- 그룹에 따라 전체 버킷 출력 -->
+ 	<select id="GroupAllBuck" parameterType="map" resultType="vo.MypageBucketVO">
+ 		SELECT title, TRUNC(sysdate-d_day) d_day, id FROM selectedbucket where member_id = #{id} and group_id =#{group_id} order by d_day DESC
+ 	</select>
+ 	
+ 	<!-- 그룹에 따라 버킷 출력(완료 / 미완료) -->
+ 	<select id="groupChos" parameterType="map" resultType="vo.MypageBucketVO">
+ 		SELECT title, TRUNC(sysdate-d_day) d_day, id FROM selectedbucket where member_id = #{id} and group_id =#{group_id} and stat=#{stat} order by d_day DESC
+ 	</select>
+ 	
+ 	<!-- 버킷 관련 -->
+ 	<!-- 버킷 완료 버튼 -->
+ 	<select id="complete" parameterType="map" resultType="vo.MypageBucketVO">
+ 		update selectedbucket set stat = 'p' where member_id = #{member_id} and id = #{id}
+ 	</select>
+ 	
+ 	<!-- 버킷 삭제 -->
+ 	<select id="delete" parameterType="int">
+ 		delete from selectedbucket where id=#{id}
+ 	</select>
+ 	
+ 	<!-- 아카이브 관련 -->
+ 	<!-- 버킷 완료 버튼 눌렀을 떄 diary table에 저장 -->
+ 	<insert id="CreateDiary"  parameterType="int">
+ 	 	INSERT INTO diary(bucket_id, complete_date) VALUES (#{id},sysdate)		  
+	</insert>
+</mapper>

@@ -1,0 +1,535 @@
+
+
+#area1 {
+		font-family: Do Hyeon;
+  font-size: 20px;
+	float: left;
+	width: 30%;
+	height: 100%;
+	text-align: center;
+	float: left;
+}
+
+#table1 tr, #table1 td {
+	width: 60%;
+	height: 90px;
+	margin: auto;
+	text-align: center;
+}
+
+#table2{
+	width: 95%;
+}
+
+table{
+	margin-left:30px;
+	width: 80%;
+	height: 100%;
+	margin: auto;
+	text-align: center;
+}
+
+#area11{
+	font-family: Do Hyeon;
+  font-size: 20px;
+	padding-top: 50px;
+	
+}
+
+#area22{
+		font-family: Do Hyeon;
+  font-size: 20px;
+	padding-top: 20px;
+	padding-bottom: 50px;
+}
+
+#area2 {
+	float: right;
+	width: 60%;
+	height: 100%;
+}
+
+#tableMenu{
+	width: 100%;
+	margin-top: 40px;
+}
+
+#tableMenu th{
+	text-align: center;
+}
+
+#bucketTable{
+	width: 101%;	
+}
+
+#bucketTable td{
+	text-align: center;
+}
+
+fieldset button{
+  font-family: Do Hyeon;
+  font-size: 17px;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  border-radius: 20px;
+  margin: 5px;
+  border: 1px solid #071f4c;
+}
+
+#area2 input[type=submit]{
+	font-family: Do Hyeon;
+  font-size: 20px;
+  border-style: solid;
+  border-color: gray;
+}
+
+#BuckTitle{
+	text-align:center;
+	width:50%;
+}
+.BuckTitle{
+	width: 50%;
+}
+
+/* 프로필 사진을 동그랗게 */
+.photo3 {
+    width: 200px; height: 200px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+#bucketdel{
+	text-align: left;
+}
+
+@import url(https://fonts.googleapis.com/css?family=Aldrich);
+
+/* progressbar */
+
+.progress1{
+	width:500px;
+	display:block;
+	margin:5px auto;
+}
+.progress {
+	overflow: hidden;
+	height: 20px;
+	background-color: #ccc;
+	border-radius: 4px;
+	-webkit-box-shadow: inset 0 1px 2px rgba(0,0,0,.1);
+	box-shadow: inset 0 1px 2px rgba(0,0,0,.1);
+		margin-bottom: 20px;
+}
+.progress-bar {
+	width: 0;
+	height: 100%;
+	color: #fff;
+	text-align: center;
+	background-color: #00ccff;
+}
+.progress-striped .progress-bar {
+			background-image: -webkit-linear-gradient(45deg,rgba(255,255,255,.15) 25%,transparent 25%,transparent 50%,rgba(255,255,255,.15) 50%,rgba(255,255,255,.15) 75%,transparent 75%,transparent);
+			background-image: linear-gradient(45deg,rgba(255,255,255,.15) 25%,transparent 25%,transparent 50%,rgba(255,255,255,.15) 50%,rgba(255,255,255,.15) 75%,transparent 75%,transparent);
+			background-size: 40px 40px;
+}
+.progress.active .progress-bar {
+	-webkit-animation: progress-bar-stripes 2s linear infinite;
+	animation: progress-bar-stripes 2s linear infinite;
+	-moz-animation: progress-bar-stripes 2s linear infinite;
+}
+
+/* dropbox */
+.dropdown {
+  display: inline-block;
+  position: relative;
+  overflow: hidden;
+  height: 28px;
+  width: 150px;
+  background: #f2f2f2;
+  border: 1px solid;
+  border-color: white #f7f7f7 whitesmoke;
+  border-radius: 3px;
+  background-image: -webkit-linear-gradient(top, transparent, rgba(0, 0, 0, 0.06));
+  background-image: -moz-linear-gradient(top, transparent, rgba(0, 0, 0, 0.06));
+  background-image: -o-linear-gradient(top, transparent, rgba(0, 0, 0, 0.06));
+  background-image: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.06));
+  -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.08);
+}
+
+.dropdown:before, .dropdown:after {
+  content: '';
+  position: absolute;
+  z-index: 2;
+  top: 9px;
+  right: 10px;
+  width: 0;
+  height: 0;
+  border: 4px dashed;
+  border-color: #888888 transparent;
+  pointer-events: none;
+}
+
+.dropdown:before {
+  border-bottom-style: solid;
+  border-top: none;
+}
+
+.dropdown:after {
+  margin-top: 7px;
+  border-top-style: solid;
+  border-bottom: none;
+}
+
+.dropdown-select {
+  position: relative;
+  width: 130%;
+  margin: 0;
+  padding: 6px 8px 6px 10px;
+  height: 28px;
+  line-height: 14px;
+  font-size: 12px;
+  color: #62717a;
+  text-shadow: 0 1px white;
+  background: #f2f2f2; /* Fallback for IE 8 */
+  background: rgba(0, 0, 0, 0) !important; /* "transparent" doesn't work with Opera */
+  border: 0;
+  border-radius: 0;
+  -webkit-appearance: none;
+}
+
+.dropdown-select:focus {
+  z-index: 3;
+  width: 100%;
+  color: #394349;
+  outline: 2px solid #49aff2;
+  outline: 2px solid -webkit-focus-ring-color;
+  outline-offset: -2px;
+}
+
+.dropdown-select > option {
+  margin: 3px;
+  padding: 6px 8px;
+  text-shadow: none;
+  background: #f2f2f2;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+/* Fix for IE 8 putting the arrows behind the select element. */
+
+.lt-ie9 .dropdown {
+  z-index: 1;
+}
+
+.lt-ie9 .dropdown-select {
+  z-index: -1;
+}
+
+.lt-ie9 .dropdown-select:focus {
+  z-index: 3;
+}
+
+/* Dirty fix for Firefox adding padding where it shouldn't. */
+
+@-moz-document url-prefix() {
+  .dropdown-select {
+    padding-left: 6px;
+  }
+}
+
+/* modal */
+/*assign full width inputs*/ 
+    .groupModal { 
+        width: 30%; 
+        padding: 12px 20px; 
+        margin: 8px 0; 
+        display: inline-block; 
+        border: 1px solid #ccc; 
+        box-sizing: border-box; 
+    }
+
+/*set extra style for the cancel button*/
+.cancelbtn {
+	font-family: Do Hyeon;
+	font-size: 17px;
+	padding: 10px 20px;
+	text-align: center;
+	text-decoration: none;
+	cursor: pointer;
+	border-radius: 20px;
+	margin: 20px auto;
+	border: 1px solid #071f4c;
+	background-color: #f44336;
+}
+
+container2{
+	margin-bottom: 30px;
+}
+
+/*centre the display image inside the container*/
+.imgcontainer { 
+        text-align: center; 
+        margin: 24px 0 12px 0; 
+        position: relative; 
+    }
+    
+    /*set image properties*/ 
+    img.avatar { 
+        width: 40%; 
+        border-radius: 50%; 
+    }
+    
+    /*set padding to the container*/ 
+    .container1 { 
+        padding: 16px; 
+    } 
+      
+    /*set the forgot password text*/ 
+    span.psw { 
+        float: right; 
+        padding-top: 16px; 
+    } 
+    
+    /*set the Modal background*/ 
+    .modal { 
+        display: none; 
+        position: fixed; 
+        z-index: 9000; 
+        left: 0; 
+        top: 0; 
+        width: 100%; 
+        height: 100%; 
+        overflow: auto; 
+        background-color: rgb(0, 0, 0); 
+        background-color: rgba(0, 0, 0, 0.4); 
+        padding-top: 100px; 
+    } 
+    
+    /*style the model content box*/ 
+    .modal-content { 
+        background-color: #fefefe; 
+        margin: 5% auto 15% auto; 
+        border: 1px solid #888; 
+        width: 50%; 
+        text-align: center;
+    } 
+    
+    /*style the close button*/ 
+    .close { 
+        position: absolute; 
+        right: 25px; 
+        top: 0; 
+        color: #000; 
+        font-size: 35px; 
+        font-weight: bold; 
+    } 
+      
+    .close:hover, 
+    .close:focus { 
+        color: red; 
+        cursor: pointer; 
+    } 
+    
+    /* add zoom animation*/ 
+    .animate { 
+        -webkit-animation: animatezoom 0.6s; 
+        animation: animatezoom 0.6s 
+    } 
+      
+    @-webkit-keyframes animatezoom { 
+        from { 
+            -webkit-transform: scale(0) 
+        } 
+        to { 
+            -webkit-transform: scale(1) 
+        } 
+    } 
+      
+    @keyframes animatezoom { 
+        from { 
+            transform: scale(0) 
+        } 
+        to { 
+            transform: scale(1) 
+        } 
+    } 
+      
+    @media screen and (max-width: 300px) { 
+        span.psw { 
+            display: block; 
+            float: none; 
+        } 
+        .cancelbtn { 
+            width: 100%; 
+        } 
+    } 
+
+/* 회원정보 수정 */
+
+.main{
+ 	margin-top: 70px;
+}
+
+h1.title { 
+text-align: center;
+}
+
+hr{
+	width: 10%;
+	color: #fff;
+}
+
+.form-group{
+	margin-bottom: 15px;
+}
+
+label{
+	margin-bottom: 15px;
+}
+
+.main-login{
+ 	background-color: #fff;
+    /* shadows and rounded borders */
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+    border-radius: 2px;
+    -moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+    -webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+
+}
+
+.main-center{
+ 	margin-top: 30px;
+ 	margin: 0 auto;
+ 	max-width: 330px;
+    padding: 20px 20px;
+
+}
+
+.login-button{
+	margin-top: 5px;
+}
+
+.login-register{
+	font-size: 11px;
+	text-align: center;
+}
+
+.avatar-upload {
+  position: relative;
+  max-width: 205px;
+  margin: 50px auto;
+}
+.avatar-upload .avatar-edit {
+  position: absolute;
+  right: 12px;
+  z-index: 1;
+  top: 10px;
+}
+.avatar-upload .avatar-edit input {
+  display: none;
+}
+.avatar-upload .avatar-edit input + label {
+  display: inline-block;
+  width: 34px;
+  height: 34px;
+  margin-bottom: 0;
+  border-radius: 100%;
+  background: #ffffff;
+  border: 1px solid transparent;
+  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.12);
+  cursor: pointer;
+  font-weight: normal;
+  transition: all 0.2s ease-in-out;
+}
+.avatar-upload .avatar-edit input + label:hover {
+  background: #f1f1f1;
+  border-color: #d6d6d6;
+}
+.avatar-upload .avatar-edit input + label:after {
+  content: "\f040";
+  font-family: "FontAwesome";
+  color: #757575;
+  position: absolute;
+  top: 10px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  margin: auto;
+}
+.avatar-upload .avatar-preview {
+  width: 192px;
+  height: 192px;
+  position: relative;
+  border-radius: 100%;
+  border: 6px solid #f8f8f8;
+  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.1);
+}
+.avatar-upload .avatar-preview > div {
+  width: 100%;
+  height: 100%;
+  border-radius: 100%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.form-control-mypage{
+	width: 100%; 
+	padding: 12px 20px; 
+	margin: 8px 0; 
+	display: inline-block; 
+	border: 1px solid #ccc; 
+	box-sizing: border-box; 
+}
+
+/* scrollbar */
+
+.scrollbar_mypage
+{
+	float: left;
+	height: 330px;
+	width: 100%;
+	background: #F5F5F5;
+	overflow-y: scroll;
+	overflow-x: hidden;
+	margin-bottom: 25px;
+}
+
+.force-overflow
+{
+	min-height: 450px;
+}
+
+#wrapper
+{
+	text-align: center;
+	width:100%;
+	margin: auto;
+}
+
+
+#style-5::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	background-color: #F5F5F5;
+}
+
+#style-5::-webkit-scrollbar
+{
+	width: 10px;
+	background-color: #F5F5F5;
+}
+
+#style-5::-webkit-scrollbar-thumb
+{
+	background-color: #0ae;
+	
+	background-image: -webkit-gradient(linear, 0 0, 0 100%,
+	                   color-stop(.5, rgba(255, 255, 255, .2)),
+					   color-stop(.5, transparent), to(transparent));
+}
