@@ -1,0 +1,17 @@
+<nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+  <!-- Sidebar Toggle (Topbar) -->
+  <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+    <i class="fa fa-bars"></i>
+  </button>
+
+    <!-- Page Heading -->
+    {% if request.resolver_match.url_name == 'tables' %}
+    <h1 class="display-5">Tables</h1>
+    {% elif request.resolver_match.url_name == 'charts' %}
+    <h1 class="display-5">Charts</h1>
+    {% else %}
+    <h1 class="display-5">Dashboard</h1>
+    {% endif %}
+    
+</nav>

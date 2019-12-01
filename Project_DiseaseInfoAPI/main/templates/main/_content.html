@@ -1,0 +1,68 @@
+{% load static %}
+<div class="container-fluid">
+    <!-- REST API Example -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">REST-API</h6>
+        </div>
+        <div class="card-body" style="margin: 0% 10%;">
+            <div class="input-group mt-3 mb-3">
+                <div class="input-group-prepend">
+                </div>
+                <div class="input-group-append">
+                    <button class="btn btn-primary" id="reqGenerate" style="width: 120px;">토큰 값</button>
+                </div>
+                <input type="text" class="form-control" id="getToken" placeholder="로그인 해주세요. 토큰값이 필요합니다.">
+            </div>
+            <hr>
+            <div class="input-group mt-3 mb-3">
+                <div class="input-group-prepend">
+                </div>
+                <div class="input-group-append">
+                    <button class="btn btn-primary" id="reqVerify" style="width: 120px;">토큰 검증</button>
+                </div>
+                <input type="text" class="form-control" id="resVerify" placeholder="생성된 토큰의 검증 결과입니다." readonly>
+            </div>
+            <hr>
+            <div class="input-group mt-3 mb-3">
+                <div class="input-group-prepend">
+                </div>
+                <div class="input-group-append">
+                    <button class="btn btn-primary" id="reqRefresh" style="width: 120px;">토큰 갱신</button>
+                </div>
+                <input type="text" class="form-control" id="getRetoken" placeholder="갱신된 토큰값입니다." readonly>
+            </div>
+            <hr>
+            <div class="input-group mt-3 mb-3">
+                <div class="input-group-prepend">
+                </div>
+                <div class="input-group-append">
+                    <button class="btn btn-primary" id="reqData" style="width: 120px;">데이터 요청</button>
+                </div>
+                <input type="text" class="form-control" id="resData" placeholder="데이터 요청 결과입니다." readonly>
+            </div>
+        </div>
+    </div>
+
+    <!-- Collapsable Card Example -->
+    <div class="card shadow mb-4">
+        <!-- Card Header - Accordion -->
+        <a href="#collapseCardExample" class="d-block card-header py-3" data-toggle="collapse" role="button"
+            aria-expanded="true" aria-controls="collapseCardExample">
+            <h6 class="m-0 font-weight-bold text-primary">Response Result</h6>
+        </a>
+        <!-- Card Content - Collapse -->
+        <div class="collapse collapse" id="collapseCardExample">
+            {% include 'main/_contentTable.html' %}
+        </div>
+    </div>
+
+</div>
+{% block scripts %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/js-cookie@beta/dist/js.cookie.min.js"></script>
+<script>
+    $('#getToken').val(sessionStorage.getItem('token'));
+</script>
+<script src="{% static 'main/js/reqAjax.js' %}"></script>
+{% endblock %} 
